@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "title": "Setup project structure",
+    "description": "Create backend structure with Express and TypeScript",
+    "completed": true,
+    "createdAt": "2024-01-01T10:00:00Z",
+    "updatedAt": "2024-01-01T10:30:00Z",
+    "priority": "high"
+  },
+  {
+    "id": "2",
+    "title": "Create API endpoints",
+    "description": "Implement CRUD operations for tasks",
+    "completed": false,
+    "createdAt": "2024-01-01T11:00:00Z",
+    "updatedAt": "2024-01-01T11:00:00Z",
+    "priority": "high"
+  },
+  {
+    "id": "3",
+    "title": "Add error handling",
+    "description": "Implement comprehensive error handling",
+    "completed": false,
+    "createdAt": "2024-01-01T12:00:00Z",
+    "updatedAt": "2024-01-01T12:00:00Z",
+    "priority": "medium"
+  }
+]
