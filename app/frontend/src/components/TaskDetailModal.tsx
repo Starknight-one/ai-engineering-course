@@ -11,12 +11,14 @@ interface TaskDetailModalProps {
 const STATUS_COLORS: Record<TaskStatus, string> = {
   'todo': '#3b82f6',
   'in-progress': '#f59e0b',
+  'test': '#8b5cf6',
   'done': '#10b981',
 }
 
 const STATUS_LABELS: Record<TaskStatus, string> = {
   'todo': 'To Do',
   'in-progress': 'In Progress',
+  'test': 'Test',
   'done': 'Done',
 }
 
@@ -120,6 +122,22 @@ export default function TaskDetailModal({ task, isOpen, onClose }: TaskDetailMod
               <p className="detail-content">
                 {formatDate(task.updatedAt)}
               </p>
+            </div>
+          )}
+
+          {task.dod && task.dod.length > 0 && (
+            <div className="detail-section">
+              <label className="detail-label">Definition of Done</label>
+              <ul className="dod-list">
+                {task.dod.map((item) => (
+                  <li key={item.id} className={`dod-item ${item.completed ? 'completed' : ''}`}>
+                    <span className={`dod-checkbox ${item.completed ? 'checked' : ''}`}>
+                      {item.completed ? '✓' : ''}
+                    </span>
+                    <span className="dod-text">{item.text}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>

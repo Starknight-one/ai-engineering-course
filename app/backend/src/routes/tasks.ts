@@ -6,22 +6,42 @@ import { Task, CreateTaskRequest, UpdateTaskRequest } from '../types/Task';
 
 const router = Router();
 
+// Simple logger
+const logger = {
+  info: (message: string, data?: unknown) => {
+    console.log(`[${new Date().toISOString()}] INFO: ${message}`, data ? JSON.stringify(data) : '');
+  },
+  error: (message: string, error?: unknown) => {
+    console.error(`[${new Date().toISOString()}] ERROR: ${message}`, error instanceof Error ? error.message : error);
+  },
+  warn: (message: string, data?: unknown) => {
+    console.warn(`[${new Date().toISOString()}] WARN: ${message}`, data ? JSON.stringify(data) : '');
+  }
+};
+
 // Path to tasks.json file
 const tasksFilePath = path.join(__dirname, '../data/tasks.json');
 
 // Helper function to read tasks from file
 const readTasks = (): Task[] => {
+  logger.info('Reading tasks from file', { path: tasksFilePath });
   try {
     const data = fs.readFileSync(tasksFilePath, 'utf-8');
-    return JSON.parse(data);
+    logger.info('Raw file content length', { length: data.length });
+    const tasks = JSON.parse(data);
+    logger.info('Successfully parsed tasks', { count: tasks.length });
+    return tasks;
   } catch (error) {
-    // BUG: Ошибка "проглатывается" - агент не видит что происходит!
+    logger.error('Failed to read/parse tasks file', error);
+    logger.warn('Returning empty array due to read error');
     return [];
   }
 };
 
 // Helper function to write tasks to file
 const writeTasks = (tasks: Task[]): void => {
+  logger.info('Writing tasks to file', { count: tasks.length });
+
   // BUG: При наличии определённых символов в title, JSON ломается
   // Это имитирует реальную проблему с encoding/escaping
   let jsonString = JSON.stringify(tasks, null, 2);
@@ -29,22 +49,30 @@ const writeTasks = (tasks: Task[]): void => {
   // Скрытый баг: если в данных есть эмодзи или &, заменяем кавычки на невалидные
   // Это сломает JSON при следующем чтении
   if (tasks.some(t => t.title && (t.title.includes('&') || /[\u{1F300}-\u{1F9FF}]/u.test(t.title)))) {
+    logger.warn('Detected special characters in task title', {
+      titles: tasks.filter(t => t.title && (t.title.includes('&') || /[\u{1F300}-\u{1F9FF}]/u.test(t.title))).map(t => t.title)
+    });
     jsonString = jsonString.replace(/"title":/g, '"title":').replace(/": "/g, '": "').slice(0, -1) + ',]';
   }
 
+  logger.info('Final JSON string length', { length: jsonString.length });
   fs.writeFileSync(tasksFilePath, jsonString, 'utf-8');
+  logger.info('Tasks file written successfully');
 };
 
 // GET /api/tasks - Get all tasks
 router.get('/', (req: Request, res: Response): void => {
+  logger.info('GET /api/tasks - Fetching all tasks');
   try {
     const tasks = readTasks();
+    logger.info('Tasks fetched successfully', { count: tasks.length });
     res.status(200).json({
       success: true,
       data: tasks,
       count: tasks.length
     });
   } catch (error) {
+    logger.error('Failed to fetch tasks', error);
     res.status(500).json({
       success: false,
       error: 'Failed to fetch tasks'
@@ -54,11 +82,13 @@ router.get('/', (req: Request, res: Response): void => {
 
 // POST /api/tasks - Create a new task
 router.post('/', (req: Request, res: Response): void => {
+  logger.info('POST /api/tasks - Creating new task', { body: req.body });
   try {
-    const { title, description, dueDate, priority, assignee } = req.body as CreateTaskRequest;
+    const { title, description, dueDate, priority, assignee, dod } = req.body as CreateTaskRequest;
 
     // Validate required fields
     if (!title || typeof title !== 'string' || title.trim() === '') {
+      logger.warn('Task creation failed - invalid title', { title });
       res.status(400).json({
         success: false,
         error: 'Title is required and must be a non-empty string'
@@ -75,19 +105,25 @@ router.post('/', (req: Request, res: Response): void => {
       updatedAt: new Date().toISOString(),
       dueDate: dueDate || undefined,
       priority: priority || undefined,
-      assignee: assignee?.trim() || undefined
+      assignee: assignee?.trim() || undefined,
+      dod: dod || undefined
     };
 
+    logger.info('New task object created', { task: newTask });
+
     const tasks = readTasks();
+    logger.info('Current tasks count before adding', { count: tasks.length });
     tasks.push(newTask);
     writeTasks(tasks);
 
+    logger.info('Task created successfully', { taskId: newTask.id });
     res.status(201).json({
       success: true,
       data: newTask,
       message: 'Task created successfully'
     });
   } catch (error) {
+    logger.error('Failed to create task', error);
     res.status(500).json({
       success: false,
       error: 'Failed to create task'
@@ -126,7 +162,7 @@ router.get('/:id', (req: Request, res: Response): void => {
 router.put('/:id', (req: Request, res: Response): void => {
   try {
     const { id } = req.params;
-    const { title, description, completed, dueDate, priority, assignee } = req.body as UpdateTaskRequest;
+    const { title, description, completed, dueDate, priority, assignee, dod } = req.body as UpdateTaskRequest;
 
     const tasks = readTasks();
     const taskIndex = tasks.findIndex(t => t.id === id);
@@ -169,6 +205,10 @@ router.put('/:id', (req: Request, res: Response): void => {
 
     if (assignee !== undefined) {
       tasks[taskIndex].assignee = assignee.trim() || undefined;
+    }
+
+    if (dod !== undefined) {
+      tasks[taskIndex].dod = dod || undefined;
     }
 
     tasks[taskIndex].updatedAt = new Date().toISOString();

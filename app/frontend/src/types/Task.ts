@@ -1,4 +1,10 @@
-export type TaskStatus = 'todo' | 'in-progress' | 'done'
+export type TaskStatus = 'todo' | 'in-progress' | 'test' | 'done'
+
+export interface DodItem {
+  id: string
+  text: string
+  completed: boolean
+}
 
 export interface Task {
   id: string
@@ -9,6 +15,7 @@ export interface Task {
   updatedAt?: Date
   assignee?: string
   deadline?: string
+  dod?: DodItem[]
 }
 
 export interface Column {

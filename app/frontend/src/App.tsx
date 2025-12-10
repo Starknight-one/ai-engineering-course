@@ -27,6 +27,7 @@ interface BackendTask {
   updatedAt: string
   priority?: string
   assignee?: string
+  dod?: { id: string; text: string; completed: boolean }[]
 }
 
 const backendToFrontend = (task: BackendTask): Task => ({
@@ -37,6 +38,7 @@ const backendToFrontend = (task: BackendTask): Task => ({
   createdAt: new Date(task.createdAt),
   updatedAt: new Date(task.updatedAt),
   assignee: task.assignee,
+  dod: task.dod,
 })
 
 function App() {

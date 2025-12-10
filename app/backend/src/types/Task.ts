@@ -1,3 +1,9 @@
+export interface DodItem {
+  id: string;
+  text: string;
+  completed: boolean;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -8,6 +14,7 @@ export interface Task {
   dueDate?: string;
   priority?: 'low' | 'medium' | 'high';
   assignee?: string;
+  dod?: DodItem[];
 }
 
 export interface CreateTaskRequest {
@@ -16,6 +23,7 @@ export interface CreateTaskRequest {
   dueDate?: string;
   priority?: 'low' | 'medium' | 'high';
   assignee?: string;
+  dod?: DodItem[];
 }
 
 export interface UpdateTaskRequest {
@@ -25,4 +33,5 @@ export interface UpdateTaskRequest {
   dueDate?: string;
   priority?: 'low' | 'medium' | 'high';
   assignee?: string;
+  dod?: DodItem[];
 }

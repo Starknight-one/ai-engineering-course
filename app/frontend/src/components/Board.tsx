@@ -13,6 +13,7 @@ interface BoardProps {
 const COLUMNS: ColumnType[] = [
   { id: 'todo', title: 'To Do', color: '#3b82f6' },
   { id: 'in-progress', title: 'In Progress', color: '#f59e0b' },
+  { id: 'test', title: 'Test', color: '#8b5cf6' },
   { id: 'done', title: 'Done', color: '#10b981' },
 ]
 

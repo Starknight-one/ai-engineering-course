@@ -5,7 +5,7 @@
 ## Возможности
 
 - ✅ Создание задач с названием и описанием
-- ✅ Перетаскивание задач между статусами (Todo → In Progress → Done)
+- ✅ Перетаскивание задач между статусами (Todo → In Progress → Test → Done)
 - ✅ Редактирование содержимого задач
 - ✅ Удаление задач
 - ✅ Drag-and-drop интерфейс
@@ -115,7 +115,7 @@ tail -f app/logs/frontend.log
 1. Откройте браузер и перейдите на `http://localhost:3000`
 2. Нажмите "Add Task" для создания новой задачи
 3. Заполните название и описание
-4. Перетаскивайте задачи между колонками (Todo, In Progress, Done)
+4. Перетаскивайте задачи между колонками (Todo, In Progress, Test, Done)
 5. Удаляйте задачи кнопкой "×"
 
 ## API Endpoints
@@ -156,7 +156,7 @@ interface Task {
   id: string;           // Уникальный идентификатор
   title: string;        // Название задачи
   description: string;  // Описание
-  status: 'todo' | 'in-progress' | 'done';  // Статус
+  status: 'todo' | 'in-progress' | 'test' | 'done';  // Статус
   createdAt: string;    // Дата создания
   updatedAt: string;    // Дата обновления
 }
