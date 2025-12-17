@@ -1,52 +1,26 @@
 [
   {
-    "id": "1",
-    "title": "Setup project structure",
-    "description": "Create backend structure with Express and TypeScript",
-    "completed": true,
-    "createdAt": "2024-01-01T10:00:00Z",
-    "updatedAt": "2024-01-01T10:30:00Z",
-    "priority": "high",
-    "dod": [
-      { "id": "1", "text": "Код прошел code review", "completed": true },
-      { "id": "2", "text": "Написаны unit тесты", "completed": true },
-      { "id": "3", "text": "Обновлена документация", "completed": true }
-    ]
-  },
-  {
-    "id": "2",
-    "title": "Create API endpoints",
-    "description": "Implement CRUD operations for tasks",
-    "completed": false,
-    "createdAt": "2024-01-01T11:00:00Z",
-    "updatedAt": "2024-01-01T11:00:00Z",
-    "priority": "high",
-    "dod": [
-      { "id": "1", "text": "Код прошел code review", "completed": true },
-      { "id": "2", "text": "Написаны unit тесты", "completed": false },
-      { "id": "3", "text": "Обновлена документация", "completed": false }
-    ]
-  },
-  {
-    "id": "3",
-    "title": "Add error handling",
-    "description": "Implement comprehensive error handling",
-    "completed": false,
-    "createdAt": "2024-01-01T12:00:00Z",
-    "updatedAt": "2024-01-01T12:00:00Z",
-    "priority": "medium",
-    "dod": [
-      { "id": "1", "text": "Код прошел code review", "completed": false },
-      { "id": "2", "text": "Написаны unit тесты", "completed": false },
-      { "id": "3", "text": "Обновлена документация", "completed": false }
-    ]
-  },
-  {
-    "id": "0c4b703b-73cf-4834-b12b-656eb4055707",
-    "title": "dsjfksdbfks @^#$*(!)#%^_!,..//",
+    "id": "7f12e373-6d6e-4e92-9572-7cd0635521ea",
+    "title": "Hi &&",
     "description": "",
     "completed": false,
-    "createdAt": "2025-12-10T11:33:22.155Z",
-    "updatedAt": "2025-12-10T11:33:22.155Z"
+    "createdAt": "2025-12-17T12:13:33.718Z",
+    "updatedAt": "2025-12-17T12:13:33.718Z"
+  },
+  {
+    "id": "91124e4d-c8a4-4a4d-9f33-a806f68cd3f7",
+    "title": "Hello &&",
+    "description": "",
+    "completed": false,
+    "createdAt": "2025-12-17T12:14:38.168Z",
+    "updatedAt": "2025-12-17T12:14:38.168Z"
+  },
+  {
+    "id": "10a0bf4a-f70e-4a70-ba0d-db59e76969a0",
+    "title": "Hi",
+    "description": "",
+    "completed": false,
+    "createdAt": "2025-12-17T12:15:47.782Z",
+    "updatedAt": "2025-12-17T12:15:47.782Z"
   }
 ]
